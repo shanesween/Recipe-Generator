@@ -1,51 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/styles'
-import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core';
-import getRecipe from '../services/getRecipe';
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import getRandomRecipe from "../services/getRandomRecipe";
+import CardContainer from "./Recipe/CardContainer";
+import Skeleton from "@material-ui/lab/Skeleton";
+import getRecipeOTD from "../services/getRecipeOTD";
 
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     margin: theme.spacing(3),
-//   },
-//   media: {
-//     height: 140,
-//     width: 250
-//   },
-//   title: {
-//     color: theme.palette.primary.main
-//   }
-// }))
-
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(3),
+  },
+  media: {
+    height: 140,
+    width: 250,
+  },
+  title: {
+    color: theme.palette.primary.main,
+  },
+}));
 
 export const Home = () => {
-  // const classes = useStyles()
+  const classes = useStyles();
 
-  const [recipeData, setRecipeData] = useState<any>(null);
-  
+  const [randomRecipe, setRandomRecipe] = useState<any>(null);
+  const [recipeOTD, setRecipeOTD] = useState<any>(null);
+
   function loadNewRecipe() {
-    getRecipe()
+    getRandomRecipe(setRandomRecipe);
+    getRecipeOTD(setRecipeOTD);
   }
 
   useEffect(() => {
-loadNewRecipe();
-  }, [])
+    loadNewRecipe();
+  }, []);
 
   return (
-    <Card >
-      <Box>
-        <CardContent>
-          {/* <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
-            Haircut Set 2.0
-          </Typography> */}
-          <Typography variant="body2" color="textSecondary" component="p">
+    <>
+      <CardContainer recipeData={randomRecipe && randomRecipe} />
+      <CardContainer recipeData={recipeOTD && recipeOTD} />
+    </>
+  );
+};
 
-          </Typography>
-        </CardContent>
-      </Box>
-    </Card>
-  )
-}
-
-export default Home
+export default Home;
