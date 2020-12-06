@@ -4,6 +4,7 @@ import getRandomRecipe from "../services/getRandomRecipe";
 import CardContainer from "./Recipe/CardContainer";
 import Skeleton from "@material-ui/lab/Skeleton";
 import getRecipeOTD from "../services/getRecipeOTD";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,10 +35,10 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <Box className={classes.root}>
       <CardContainer recipeData={randomRecipe && randomRecipe} />
       <CardContainer recipeData={recipeOTD && recipeOTD} />
-    </>
+    </Box>
   );
 };
 
